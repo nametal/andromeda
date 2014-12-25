@@ -1,5 +1,6 @@
 package nametal.com.interestcalculator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -84,12 +85,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void showCarDb(View view) {
-        CarFragment carFragment = new CarFragment();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, carFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+//        Intent intent = new Intent(this, AnotherActivity.class);
+//        startActivity(intent);
     }
 
     @Override
