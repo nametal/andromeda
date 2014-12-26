@@ -1,9 +1,7 @@
 package nametal.com.interestcalculator;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,7 +34,6 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * Calculate annual interest based on amount, monthly installment, and tenor months
-     * @param view
      */
     public void calculate(View view) {
         EditText amountTxt = (EditText) findViewById(R.id.edtAmount);
@@ -75,7 +72,7 @@ public class MainActivity extends ActionBarActivity {
      * Rounding a double value with a number of places behind decimal point
      * @param value value to round
      * @param places number of places
-     * @return
+     * @return rounded value
      */
     private double round(double value, int places) {
         double factor = Math.pow(10, places);
@@ -85,8 +82,10 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void showCarDb(View view) {
-//        Intent intent = new Intent(this, AnotherActivity.class);
-//        startActivity(intent);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new CarFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -122,8 +121,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
+            return inflater.inflate(R.layout.fragment_main, container, false);
         }
     }
 }
