@@ -10,9 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class MainActivity extends ActionBarActivity {
 
@@ -59,26 +60,19 @@ public class MainActivity extends ActionBarActivity {
             return;
         }
 
-        double amount = Double.parseDouble(amountStr);
-        double installment = Double.parseDouble(installmentStr);
-        double tenor = Double.parseDouble(tenorStr);
+        BigDecimal amount = new BigDecimal(amountStr);
+        BigDecimal installment = new BigDecimal(installmentStr);
+        BigDecimal tenor = new BigDecimal(tenorStr);
 
-        double interest = ((installment * tenor / amount) - 1) * 100;
-        interest = round(interest, 2);
+        BigDecimal hundred = new BigDecimal(100);
+
+        // interest = ((installment * tenor / amount) - 1) * 100;
+        BigDecimal interest = installment.multiply(tenor).divide(amount).subtract(BigDecimal.ONE).multiply(hundred);
+
+        // round to 2 decimal places
+        interest = interest.setScale(2, RoundingMode.HALF_UP);
+
         interestText.setText(String.valueOf(interest) + " %");
-    }
-
-    /**
-     * Rounding a double value with a number of places behind decimal point
-     * @param value value to round
-     * @param places number of places
-     * @return rounded value
-     */
-    private double round(double value, int places) {
-        double factor = Math.pow(10, places);
-        value *= factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
     }
 
     public void showCarDb(View view) {
